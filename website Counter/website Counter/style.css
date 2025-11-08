@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Aladin&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #f1f5f8;
+}
+
+.Visitor{
+    width: 80%;
+    margin-top: 190px;
+    margin-left: 120px;
+    height: 130px;
+    border-radius: 8px;
+    border: 1px solid #524444;
+    background-color: white;
+    box-shadow: 0 0 11px 4px black;
+}
+  .Visitor span{
+    color: black;
+    font-family: Aladin;
+    font-size: 100px;
+    padding: 7px;
+  }
+  #eyevisi{
+  margin-right: 3px;
+  }
+  .Visitor img{
+    height: 80px;
+    width: 170px;
+  }
+  

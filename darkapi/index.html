@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkJS</title>
+    <link href="assets/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-4">Proxy List</h1>
+        <div id="proxy-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </div>
+
+    <div id="loading" class="loader hidden"></div>
+
+    <script src="darkjs.js"></script>
+    <script>
+        const http = new DarkJS();
+        const url = "https://raw.githubusercontent.com/hookzof/socks5_list/master/tg/mtproto.json";
+        const proxyList = document.getElementById('proxy-list');
+
+        document.getElementById('loading').classList.remove('hidden');
+
+        if (navigator.onLine) {
+            http.get(url, {}, (err, res) => {
+                document.getElementById('loading').classList.add('hidden');
+
+                if (err) {
+                    showError(err);
+                } else {
+                    try {
+                        const proxies = JSON.parse(res);
+
+                        for (const proxy of proxies) {
+                            const card = document.createElement('div');
+                            card.classList.add('bg-white', 'rounded', 'overflow-hidden', 'shadow-md');
+
+                            const title = document.createElement('h3');
+                            title.classList.add('text-lg', 'font-bold', 'py-2', 'px-4', 'bg-gray-900', 'text-white');
+                            title.textContent = `${proxy.host}`;
+                            card.appendChild(title);
+
+                            const port = document.createElement('p');
+                            port.classList.add('text-gray-700', 'text-base', 'py-2', 'px-4');
+                            port.textContent = `Port: ${proxy.port}`;
+                            card.appendChild(port);
+
+                            const country = document.createElement('p');
+                            country.classList.add('text-gray-700', 'text-base', 'py-2', 'px-4');
+                            country.textContent = `Country: ${proxy.country}`;
+                            card.appendChild(country);
+
+                            const ping = document.createElement('p');
+                            ping.classList.add('text-gray-700', 'text-base', 'py-2', 'px-4');
+                            ping.textContent = `Ping: ${proxy.ping}ms`;
+                            card.appendChild(ping);
+
+                            const buttonContainer = document.createElement('div');
+                            buttonContainer.classList.add('flex', 'justify-end', 'py-2', 'px-4');
+                            card.appendChild(buttonContainer);
+
+                            const copyButton = document.createElement('button');
+                            copyButton.classList.add('bg-gray-900', 'text-white', 'py-1', 'px-2', 'rounded', 'mr-2', 'hover:bg-gray-800', 'focus:outline-none');
+                            copyButton.textContent = 'Copy Link';
+                            copyButton.addEventListener('click', () => {
+                                const proxyLink = `tg://proxy?server=${proxy.host}&port=${proxy.port}&secret=${proxy.secret}`;
+                                navigator.clipboard.writeText(proxyLink).then(() => {
+                                    showSuccess('Proxy link copied to clipboard!');
+                                }, () => {
+                                    showError('Error copying proxy link to clipboard.');
+                                });
+                                setTimeout(() => {
+                                    hideMessage();
+                                }, 4000);
+                            });
+                            buttonContainer.appendChild(copyButton);
+
+                            const connectButton = document.createElement('button');
+                            connectButton.classList.add('bg-gray-900', 'text-white', 'py-1', 'px-2', 'rounded', 'hover:bg-gray-800', 'focus:outline-none');
+                            connectButton.textContent = 'Connect';
+                            connectButton.addEventListener('click', () => {
+                                const proxyLink = `tg://proxy?server=${proxy.host}&port=${proxy.port}&secret=${proxy.secret}`;
+                                const telegramUrl = `tg://resolve?domain=telegram&server=${encodeURIComponent(proxyLink)}`;
+                                window.location.href = telegramUrl;
+                            });
+                            buttonContainer.appendChild(connectButton);
+
+                            proxyList.appendChild(card);
+                        }
+                    } catch (e) {
+                        showError('Error parsing proxy list.');
+                    }
+                }
+            });
+        } else {
+            showError('No Internet connection.');
+            document.getElementById('loading').classList.add('hidden');
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.classList.add('glass', 'error');
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            setTimeout(() => {
+                hideMessage(errorDiv);
+            }, 3000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.classList.add('glass', 'success');
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            setTimeout(() => {
+                hideMessage(successDiv);
+            }, 3000);
+        }
+
+        function hideMessage(message) {
+            message.remove();
+        }
+    </script>
+</body>
+
+</html>

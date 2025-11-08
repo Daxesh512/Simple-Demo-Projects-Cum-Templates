@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
+}
+
+body {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   min-height: 100vh;
+   background: rgb(139, 139, 251);
+}
+
+@keyframes myAnim {
+	0% {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+.container {
+   max-width: 300px;
+   min-width: 300px;
+   width: 90%;
+   display: flex;
+   background: #fff;
+   padding: 20px 20px 20px 20px;
+   border-radius: 10px;
+   border: 1px solid #d9d9d9;
+   box-shadow: 2px 2px 9px rgb(122, 150, 232);
+}
+
+input {
+   width: 80%;
+   height: 40px;
+   border-radius: 6px;
+   border: 1px solid rgb(139, 139, 251);
+   border-right: 0px;
+   outline: none;
+   padding: 10px;
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
+}
+
+button {
+   width: max-content;
+   padding: 10px;
+   height: 40px;
+   background-color: rgb(139, 139, 251);
+   border: 1px solid rgb(139, 139, 251);
+   color: #fff;
+   cursor: pointer;
+   border-top-right-radius: 6px;
+   border-bottom-right-radius: 6px;
+}
+
+button img {
+   filter: invert();
+   width: 20px;
+}
+
+.img{
+   width: 300px;
+   border: none;
+   margin-top: 20px;
+   height: 180px;
+   background-color: #fff;
+   border-radius: 8px;
+   z-index: -1;
+   display: none;
+   padding: 20px;
+   animation: myAnim 0.5s ease 0s 1 normal forwards;
+}
+.qr{
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 8px;
+   border: 1px solid #c1bcbc;
+}
+.qr img{
+   width: 120px;
+   height: 120px;
+   border: none;
+}

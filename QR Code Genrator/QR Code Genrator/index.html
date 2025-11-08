@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Code Net</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   <div class="container">
+      <input type="text" name="qr_text" id="qr_text" placeholder="Enter text here">
+      <button onclick="genrate()"><img src="https://i.ibb.co/dpmDvzF/qr.png"></button>
+   </div>
+   <div class="img" id="qr_box">
+      <div class="qr"><img src="" id="qr_img"></div>
+   </div>
+   <script>
+      function genrate() {
+         var qr_text = document.getElementById("qr_text").value;
+         if (qr_text != '') {
+            document.getElementById("qr_box").style.display = 'block';
+            document.getElementById("qr_img").src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + qr_text;
+         } else {
+            document.getElementById("qr_text").value = "Code Net";
+            document.getElementById("qr_box").style.display = 'block';
+            document.getElementById("qr_img").src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Code Net';
+         }
+      }
+   </script>
+</body>
+
+</html>

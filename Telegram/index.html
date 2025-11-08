@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Telegram Proxy</title>
+    <link rel="stylesheet" href="assets/tailwind.css">
+    <link rel="stylesheet" href="App.css">
+    <script src="assets/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app" class="container mx-auto mb-10">
+        <h1 class="text-4xl font-bold text-center my-8">Telegram Proxy</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div v-for="proxy in proxies" :key="proxy.host"
+                class="proxy-card bg-white shadow-lg rounded-lg overflow-hidden mb-5">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold">{{ proxy.host }}</h2>
+                    <p class="text-gray-500">{{ proxy.country }} - {{ proxy.port }}</p>
+                    <p class="text-gray-500">Uptime: {{ proxy.uptime }}%</p>
+                    <p class="text-gray-500">Ping: {{ proxy.ping }}ms</p>
+                    <div class="text-center mt-6">
+                        <a :href="`tg://proxy?server=${proxy.host}&port=${proxy.port}&secret=${proxy.secret}`"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Connect</a>
+                        <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full ml-4"
+                            @click="copyProxyLink(proxy)">Copy Proxy Link</button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="proxies.length === 0" class="text-center text-gray-500 text-xl font-bold col-span-full mt-8">
+                Loading proxies...
+            </div>
+            <div v-if="error" class="text-center text-red-500 text-xl font-bold col-span-full mt-8">
+                {{ error }}
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        Powered by <a href="https://telegram.org/proxy">MTProto</a> | Developed by Hossein Pira
+    </div>
+
+    <script src="App.js"></script>
+</body>
+
+</html>
